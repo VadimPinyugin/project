@@ -1,0 +1,14 @@
+Итог
+- Развернута PostgreSQL в Docker
+- Настроены ORM-модели (SQLAlchemy)
+- Настроены миграции (Alembic)
+- Создан скрипт для заполнения БД
+1) Создан файл docker-compose.yml
+2) Запуск контейнера docker-compose up -d
+3) Создан файл models.py с описанием таблиц(ORM-модели)
+4) Настроены миграции (Alembic):
+alembic init migrations
+sqlalchemy.url = postgresql://user:password@localhost:5432/messenger
+alembic revision --autogenerate -m "Initial migration"
+alembic upgrade head
+5) Тестовые данные seed.py
