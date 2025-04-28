@@ -1,7 +1,7 @@
 from flask import Flask, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
-from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity, get_jwt
+from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity, get_jwt, verify_jwt_in_request
 from werkzeug.security import generate_password_hash, check_password_hash
 from datetime import datetime
 
@@ -28,19 +28,28 @@ jwt = JWTManager(app)
 # Черный список для токенов
 blacklist = set()
 
-@jwt.token_in_blocklist_loader
-def check_if_token_in_blacklist(decrypted_token, request):
-    # Проверяем, есть ли токен в черном списке
-    return decrypted_token.get("jti") in blacklist
+@app.before_request
+def check_token_in_blacklist():
+    token = request.headers.get('Authorization', None)
+    if token:
+        token = token.split(" ")[1]  # Извлекаем токен из заголовка Authorization
+        try:
+            verify_jwt_in_request()
+            # Извлекаем данные токена
+            decoded_token = get_jwt()
+            jti = decoded_token.get('jti')
+            
+            # Проверяем, есть ли токен в черном списке
+            if jti in blacklist:
+                return jsonify({"description": "The token has been revoked.", "error": "token_revoked"}), 401
+        except Exception as e:
+            return jsonify({"description": str(e), "error": "invalid_token"}), 401
 
 @jwt.revoked_token_loader
 def revoked_token_callback(jwt_header, jwt_payload):
-    return (
-        jsonify(
-            {"description": "The token has been revoked.", "error": "token_revoked"}
-        ),
-        401,
-    )
+    return jsonify(
+        {"description": "The token has been revoked.", "error": "token_revoked"}
+    ), 401
 
 # Модели
 class User(db.Model):
@@ -132,6 +141,7 @@ def logout():
     
     # Получаем текущий токен
     token = get_jwt()
+
     # Извлекаем 'jti' из токена
     jti = token['jti']
     # Добавляем 'jti' в черный список
