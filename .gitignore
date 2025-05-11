@@ -4,10 +4,9 @@ venv/
 *.pyc
 __pycache__/
 
-# Игнорирование зависимостей
+# Игнорирование зависимостей (без requirements.txt)
 Pipfile
 Pipfile.lock
-requirements.txt
 
 # Логи и артефакты сборки
 logs/
