@@ -2,6 +2,7 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Messenger</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
@@ -9,7 +10,7 @@
     <header>
         <h1>Messenger</h1>
         <nav>
-            {% if session.get('token') %}
+            {% if session.get('user_id') %}
                 <a href="{{ url_for('chats_page') }}">Чаты</a>
                 <a href="{{ url_for('logout_page') }}">Выйти</a>
             {% else %}
@@ -20,13 +21,13 @@
     </header>
     <main>
         {% with messages = get_flashed_messages() %}
-          {% if messages %}
-            <ul class="flashes">
-              {% for message in messages %}
-                <li>{{ message }}</li>
-              {% endfor %}
-            </ul>
-          {% endif %}
+            {% if messages %}
+                <ul class="flashes">
+                    {% for message in messages %}
+                        <li>{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
         {% endwith %}
         {% block content %}{% endblock %}
     </main>
