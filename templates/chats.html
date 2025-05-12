@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Ваши чаты</h2>
+<ul>
+    {% for chat in chats %}
+        <li>
+            <a href="{{ url_for('view_chat', chat_id=chat['id']) }}">{{ chat['name'] }}</a>
+
+            <!-- Кнопка "Покинуть чат" -->
+            <form method="POST" action="{{ url_for('leave_chat', chat_id=chat['id']) }}" style="display:inline;">
+                <button type="submit">Покинуть</button>
+            </form>
+        </li>
+    {% endfor %}
+</ul>
+
+<form method="POST">
+    <input type="text" name="name" placeholder="Название нового чата" required>
+    <button type="submit">Создать чат</button>
+</form>
+{% endblock %}

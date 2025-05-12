@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Сообщения</h2>
+<ul>
+    {% for message in messages %}
+        <li>
+            {{ message['timestamp'] }} | <span class="sender">{{ message['sender'] }}</span>: {{ message['content'] }}
+        </li>
+    {% endfor %}
+</ul>
+
+<form method="POST">
+    <input type="text" name="content" placeholder="Ваше сообщение" required>
+    <button type="submit" name="action" value="send_as_self">Отправить</button>
+</form>
+
+<form method="POST">
+    <input type="text" name="new_user_id" placeholder="ID пользователя для добавления" required>
+    <button type="submit" name="action" value="add_user">Добавить пользователя</button>
+</form>
+
+<a href="{ url_for('chats_page') }">Назад к чатам</a>
+{% endblock %}

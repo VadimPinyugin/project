@@ -1,0 +1,16 @@
+# Игнорирование виртуального окружения
+venv/
+.env
+*.pyc
+__pycache__/
+
+# Игнорирование зависимостей (без requirements.txt)
+Pipfile
+Pipfile.lock
+
+# Логи и артефакты сборки
+logs/
+*.log
+dist/
+build/
+*.egg-info/
