@@ -4,7 +4,7 @@
 <ul>
     {% for message in messages %}
         <li>
-            {{ message['timestamp'] }} | <b>{{ message['sender'] }}</b>: {{ message['content'] }}
+            {{ message['timestamp'] }} | <span class="sender">{{ message['sender'] }}</span>: {{ message['content'] }}
         </li>
     {% endfor %}
 </ul>
@@ -19,5 +19,5 @@
     <button type="submit" name="action" value="add_user">Добавить пользователя</button>
 </form>
 
-<a href="{{ url_for('chats_page') }}">Назад к чатам</a>
+<a href="{ url_for('chats_page') }">Назад к чатам</a>
 {% endblock %}
