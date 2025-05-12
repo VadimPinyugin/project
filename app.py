@@ -11,7 +11,6 @@ app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv(
     'DATABASE_URL',
     'postgresql://user:password@localhost:5432/messenger'  # fallback для локального запуска
 )
-#app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://user:password@localhost:5432/messenger'
 
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
