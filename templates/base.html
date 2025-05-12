@@ -11,6 +11,7 @@
         <h1>Messenger</h1>
         <nav>
             {% if session.get('user_id') %}
+                <span class="user-id">ID пользователя: {{ session.get('user_id') }}</span>
                 <a href="{{ url_for('chats_page') }}">Чаты</a>
                 <a href="{{ url_for('logout_page') }}">Выйти</a>
             {% else %}
