@@ -214,4 +214,4 @@ def view_chat(chat_id):
     return render_template('messages.html', messages=formatted, chat_id=chat_id)
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host="0.0.0.0", port=5000)
